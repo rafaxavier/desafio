@@ -18,7 +18,7 @@
 - Após acessar a rais no docker, executar as migrations
  $ php artisan migrate
 
-* Endpoints:
+
 <table>
     <tr>
        <td>Método</td>   	
