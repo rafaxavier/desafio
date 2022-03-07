@@ -10,7 +10,7 @@ services:
             - '.docker/dbdata:/var/lib/mysql'
         environment:
             - MYSQL_ROOT_PASSWORD=docker
-            - MYSQL_DATABASE=test_JN2
+            - MYSQL_DATABASE=JN2
             - MYSQL_USER=docker
             - MYSQL_PASSWORD=docker
         ports:

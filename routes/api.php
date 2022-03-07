@@ -14,14 +14,16 @@ use App\Http\Controllers\ClienteController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post('/cliente',[ClienteController::class, 'store']);
-Route::put('/cliente/{id}',[ClienteController::class, 'update']);
-Route::delete('/cliente/{id}',[ClienteController::class, 'destroy']);
+Route::post('/cliente',[ClienteController::class, 'store']);  
 
-Route::get('/cliente/{id?}',[ClienteController::class, 'show']);
-Route::get('/consulta/final-placa/{numero}',[ClienteController::class, 'buscaClientes']);
+Route::put('/cliente/{id}',[ClienteController::class, 'update']); 
+
+Route::delete('/cliente/{id}',[ClienteController::class, 'destroy']); 
+
+Route::get('/cliente/{id?}',[ClienteController::class, 'show']); 
+
+Route::get('/consulta/final-placa/{numero}',[ClienteController::class, 'buscaPorPlaca']);
+
+Route::get('/clientes',[ClienteController::class, 'index']);
 

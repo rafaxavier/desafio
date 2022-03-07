@@ -7,55 +7,60 @@ use App\Models\Cliente;
 
 class ClienteController extends Controller
 {
-
-    public function show($id){
-        $cliente = new Cliente();
-        $data= $cliente::all();
-        return ['data'=>$data];
-    }
-
-    public function buscaClientes($s){
-        $data = Cliente::where('CPF','like', '%'.$s.'%')->paginate(10);
-        return view('clientes',['data'=>$data]);
-    }
-
-    public function validar($request){
-        $request->validate([
-            'nome'=> 'required',
-            'CPF'=> 'required',
-            'email'=> 'required',
-            'telefone'=> 'required',
-            'endereco'=> 'required',
-        ],[
-            'nome.required'=>'Campo nome deve ser preenchido',
-            'CPF.required'=>'Campo CPF deve ser preenchido',
-            'email.required'=>'Campo email deve ser preenchido',
-            'telefone.required'=>'Campo telefone deve ser preenchido',
-            'endereco.required'=>'Campo endereco deve ser preenchido'
-        ]);
-    }
-
     public function store(Request $request){
-        $this->validar($request);
-
+       
         $cliente = new Cliente();
+        $request->validate( $cliente->rules() , $cliente->feedbacks() );
         $cliente->fill($request->all());
         $cliente->save();
 
-        return redirect()->route('clientes');
+        return response()->json($cliente, 201);
     }
 
     public function update(Request $request){
-        $this->validar($request);
-
+        
         $cliente= Cliente::find($request->id);
+        $request->validate( $cliente->rules() , $cliente->feedbacks() );
+        
         $cliente->update($request->all());
 
-        return redirect()->route('clientes');
+        return response()->json($cliente, 200);
     }
 
     public function destroy($id)
-    {
-        Cliente::destroy($id);
+    {   
+        $cliente= Cliente::find($id);
+        if($cliente === null){
+            return response()->json(['error'=>'Cliente não deletado, pois não existe'], 404);
+        }
+        
+        $cliente->delete();
+
+        return response()->json( ['msg'=>'Cliente deletado com sucesso'] ,200);
     }
+
+    public function show($id){
+        $cliente = Cliente::find($id);
+        if($cliente === null){
+            return response()->json(['error'=>'Cliente não encontrado'], 404);
+        }
+
+        return response()->json($cliente, 200);
+    }
+
+    public function buscaPorPlaca($num){
+        $clientes = Cliente::where('placa','like', '%'.$num)->get();
+        if(count($clientes) < 1){
+
+            return response()->json(['error'=>'Cliente não encontrado'], 404);
+        }
+
+        return response()->json($clientes, 200);
+    }
+    
+    public function index(){
+        $cliente = Cliente::all();
+        return $cliente;
+    }
+    
 }
