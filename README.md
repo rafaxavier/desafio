@@ -15,7 +15,7 @@
 - Comando para acessar a raiz do projeto no docker                           
  $ sudo docker exec -it desafio-php-fpm-1  bash   
 
-- Após acessar a rais no docker, executar as migrations
+- Após acessar a raiz no docker, executar as migrations
  $ php artisan migrate
 
 
