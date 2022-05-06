@@ -9,13 +9,13 @@
 
 ## Preparando para rodar
 
-- Execute na raiz do projeto (local) , para subir o docker
+- Execute na raiz do projeto (local) , para subir o docker </br>
  $ sudo docker-compose up -d 
 
-- Comando para acessar a raiz do projeto no docker                           
+- Comando para acessar a raiz do projeto no docker </br>                          
  $ sudo docker exec -it desafio-php-fpm-1  bash   
 
-- Após acessar a raiz no docker, executar as migrations
+- Após acessar a raiz no docker, executar as migrations </br>
  $ php artisan migrate
 
 
